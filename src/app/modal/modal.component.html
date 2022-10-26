@@ -1,0 +1,48 @@
+<div class="modal-container">
+  <div
+    style="
+      width: 500px;
+      height: auto;
+      border: olive 1px solid;
+      background-color: white;
+      border-radius: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    "
+  >
+    <h1 class="title">Add a question</h1>
+    <div class="body">
+      <form id="questionTemplateForm" [formGroup]="questionTemplateForm">
+        <section>
+          <select id="" formControlName="type">
+            <option value="paragraph">Paragraph</option>
+            <option value="checkbox-list">Checkbox List</option>
+          </select>
+        </section>
+        <section>
+          <label for="content">Type your question here </label><br>
+          <input type="text" formControlName="content" id="content">
+        </section>
+        <section *ngIf="questionTemplateForm.controls['type'].value === 'checkbox-list'">
+          <ul *ngFor="let option of $any(questionTemplateForm.controls['options']).controls">
+            <li>{{option.value}}</li>
+          </ul>
+          <button (click)="showOptionBox()">Add another answer</button>
+          <input *ngIf="optionBoxVisible" formControlName="nextOption" (keyup.enter)="addOption()">
+        </section>
+        <section>
+          <input type="checkbox" formControlName="allowAddAnswer" id="allowAddAnswer" >
+          <label for="allowAddAnswer">Allow user to specify their own answer </label><br>
+          <input type="checkbox" formControlName="required" id="required" >
+          <label for="required"> This field is required</label><br>
+        </section>
+      </form>
+    </div>
+    <div class="btn-container">
+      <button (click)="close()">Close</button>
+      <button (click)="confirm()">Confirm</button>
+    </div>
+  </div>
+</div>

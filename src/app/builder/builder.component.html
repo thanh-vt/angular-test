@@ -1,0 +1,17 @@
+<button (click)="showDialog()">Add Question</button>
+<form [formGroup]="questionForm" >
+  <section *ngFor="let question of questionList; index as i">
+    <label style="font-weight: bold" [for]="question.name">{{ question.content }} </label><br>
+    <textarea *ngIf="(question.type === 'paragraph'); else blockSelect"
+              [id]="question.name"
+              [formControlName]="question.name" rows="3"></textarea>
+    <ng-template #blockSelect>
+      <ng-container *ngFor="let option of question.options; index as j">
+        <input [formControlName]="question.name" [id]="question.name + '_cb_' + j" type="checkbox" [value]="option" />
+        <label [for]="question.name + '_cb_' + j">{{ option }}</label>
+      </ng-container>
+
+    </ng-template>
+  </section>
+</form>
+<div #modal></div>
