@@ -30,7 +30,7 @@
           <ul>
             <li *ngFor="let option of $any(questionTemplateForm.controls['options']).controls">{{option.value}}</li>
           </ul>
-          <button (click)="showOptionBox()">Add another answer</button>
+          <button (click)="showOptionBox()">Add another answer (Press Enter)</button>
           <input *ngIf="optionBoxVisible" formControlName="nextOption" (keyup.enter)="addOption()"><br>
           <small *ngIf="questionTemplateForm.controls['nextOption'].touched && questionTemplateForm.errors" style="color: red">
             {{questionTemplateForm.errors['message']}}
