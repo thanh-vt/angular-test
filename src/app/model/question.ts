@@ -1,8 +1,9 @@
 export interface Question {
   type: 'paragraph' | 'checkbox-list';
-  name: string;
   content: string;
-  options?: string[];
+  options: string[];
   allowAddAnswer: boolean;
+  otherAnswer?: string;
   required: boolean;
+  answer?: string[] | string | null;
 }

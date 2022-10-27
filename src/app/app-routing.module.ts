@@ -6,6 +6,7 @@ import { AnswersComponent } from "./answers/answers.component"; // CLI imports r
 const routes: Routes = [
   { path: 'builder', component: BuilderComponent },
   { path: 'answers', component: AnswersComponent },
+  { path: '**', redirectTo: 'builder' },
 ];
 
 @NgModule({

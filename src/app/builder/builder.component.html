@@ -1,17 +1,25 @@
 <button (click)="showDialog()">Add Question</button>
-<form [formGroup]="questionForm" >
-  <section *ngFor="let question of questionList; index as i">
-    <label style="font-weight: bold" [for]="question.name">{{ question.content }} </label><br>
-    <textarea *ngIf="(question.type === 'paragraph'); else blockSelect"
-              [id]="question.name"
-              [formControlName]="question.name" rows="3"></textarea>
-    <ng-template #blockSelect>
-      <ng-container *ngFor="let option of question.options; index as j">
-        <input [formControlName]="question.name" [id]="question.name + '_cb_' + j" type="checkbox" [value]="option" />
-        <label [for]="question.name + '_cb_' + j">{{ option }}</label>
-      </ng-container>
-
-    </ng-template>
-  </section>
+<form id="questionFormGroup" [formGroup]="questionFormGroup" (ngSubmit)="submit()">
+  <div formArrayName="questions">
+    <section *ngFor="let question of questionList; index as i">
+      <label style="font-weight: bold" [for]="'question' | questionId:i">{{ question.content }}</label><span *ngIf="question.required" style="color: red">*</span><br>
+      <textarea *ngIf="(question.type === 'paragraph'); else blockSelect"
+                [id]="'question' | questionId:i"
+                [formControlName]="i" rows="3"></textarea>
+      <ng-template #blockSelect>
+        <div [formArrayName]="i" *ngFor="let option of question.options; index as j">
+          <input [formControlName]="j" [id]="'option' | optionId:i:j" type="checkbox" [value]="option"/>
+          <label [for]="'option' | optionId:i:j">{{ option }}</label>
+        </div>
+        <div *ngIf="question.allowAddAnswer" [formArrayName]="i">
+          <input [formControlName]="question.options.length" [id]="'option' | optionId:i:question.options.length" type="checkbox" [value]="question.otherAnswer"/>
+          <input type="text" [value]="question.otherAnswer" (input)="changeOtherAnswer($event, question)">
+        </div>
+      </ng-template>
+      <br>
+      <small *ngIf="questionFormArray.controls[i].touched && questionFormArray.controls[i].errors" style="color: red">This question is required</small>
+    </section>
+  </div>
+  <button type="submit" form="questionFormGroup">Submit</button>
 </form>
 <div #modal></div>

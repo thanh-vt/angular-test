@@ -1,1 +1,11 @@
-<p>answers works!</p>
+<div>
+  <section *ngFor="let question of questions">
+    <span style="font-weight: bold">{{question.content}}</span>
+    <span *ngIf="question.type === 'paragraph'; else multipleChoicesAnswer" style="font-style: italic">{{question.answer}}</span>
+    <ng-template #multipleChoicesAnswer>
+      <ul>
+        <li *ngFor="let option of question.answer">{{option}}</li>
+      </ul>
+    </ng-template>
+  </section>
+</div>

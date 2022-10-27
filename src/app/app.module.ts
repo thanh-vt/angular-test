@@ -7,13 +7,17 @@ import { AnswersComponent } from './answers/answers.component';
 import { AppRoutingModule } from "./app-routing.module";
 import { ReactiveFormsModule } from "@angular/forms";
 import { ModalComponent } from './modal/modal.component';
+import { QuestionIdPipe } from './pipe/question-id.pipe';
+import { OptionIdPipe } from './pipe/option-id.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     BuilderComponent,
     AnswersComponent,
-    ModalComponent
+    ModalComponent,
+    QuestionIdPipe,
+    OptionIdPipe
   ],
   imports: [
     BrowserModule,

@@ -33,7 +33,6 @@ export class ModalComponent implements OnInit, OnDestroy {
   validateOptions(): ValidatorFn {
     return (control: AbstractControl) => {
       if (control.get('type')?.value === 'checkbox-list' && control.get('options')?.value?.length === 0) {
-        console.log('error', control)
         return {
           message: 'Control type checkbox list must have at least 1 option'
         }
@@ -42,7 +41,7 @@ export class ModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('Modal init');
+    console.debug('Modal init');
   }
 
   close() {
@@ -52,12 +51,14 @@ export class ModalComponent implements OnInit, OnDestroy {
   confirm() {
     this.questionTemplateForm.markAllAsTouched();
     if (this.questionTemplateForm.invalid) {
-      console.log(this.questionTemplateForm.errors);
+      console.debug(this.questionTemplateForm.errors);
       return;
     }
     const question: Question = {
-      ...this.questionTemplateForm.getRawValue(),
-      name: '_'
+      ...this.questionTemplateForm.getRawValue()
+    }
+    if (question.allowAddAnswer) {
+      question.otherAnswer = 'Other';
     }
     this.confirmEvent.emit(question);
   }
@@ -74,6 +75,6 @@ export class ModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log(' Modal destroyed');
+    console.debug(' Modal destroyed');
   }
 }

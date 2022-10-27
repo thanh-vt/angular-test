@@ -23,14 +23,18 @@
         </section>
         <section>
           <label for="content">Type your question here </label><br>
-          <input type="text" formControlName="content" id="content">
+          <input type="text" formControlName="content" id="content"><br>
+          <small *ngIf="questionTemplateForm.controls['content'].touched && questionTemplateForm.controls['content'].errors" style="color: red">Question content is required</small>
         </section>
         <section *ngIf="questionTemplateForm.controls['type'].value === 'checkbox-list'">
-          <ul *ngFor="let option of $any(questionTemplateForm.controls['options']).controls">
-            <li>{{option.value}}</li>
+          <ul>
+            <li *ngFor="let option of $any(questionTemplateForm.controls['options']).controls">{{option.value}}</li>
           </ul>
           <button (click)="showOptionBox()">Add another answer</button>
-          <input *ngIf="optionBoxVisible" formControlName="nextOption" (keyup.enter)="addOption()">
+          <input *ngIf="optionBoxVisible" formControlName="nextOption" (keyup.enter)="addOption()"><br>
+          <small *ngIf="questionTemplateForm.controls['nextOption'].touched && questionTemplateForm.errors" style="color: red">
+            {{questionTemplateForm.errors['message']}}
+          </small>
         </section>
         <section>
           <input type="checkbox" formControlName="allowAddAnswer" id="allowAddAnswer" >
